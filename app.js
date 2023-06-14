@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+console.log(process.env);
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -9,7 +12,7 @@ const { rateLimiterUsingThirdParty } = require('./middlewares/rateLimit');
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 
-const { PORT = 3000 } = process.env; // TODO: перенести в config.js
+const { PORT = 3002 } = process.env; // TODO: перенести в config.js
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb'); // TODO: перенести в config.js
 
 const app = express();
