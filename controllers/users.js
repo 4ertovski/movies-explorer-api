@@ -1,6 +1,7 @@
 const userSchema = require('../models/user');
 const NotFoundError = require('../errors/NotFoundError');
 const BadRequestError = require('../errors/BadRequestError');
+const ConflictError = require('../errors/ConflictError');
 
 module.exports.getUsers = (req, res, next) => {
   userSchema
@@ -40,11 +41,7 @@ module.exports.getUser = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'CastError') {
         next(BadRequestError('Переданы некорректные данные'));
-      } else if (err.message === 'NotFound') {
-        next(new NotFoundError('Пользователь не найден'));
-      } else {
-        next(err);
-      }
+      } else next(err);
     });
 };
 
@@ -74,7 +71,13 @@ module.exports.updateUser = (req, res, next) => {
         .send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
+      if (err.code === 11000) {
+        next(
+          new ConflictError(
+            'Пользователь с такой почтой уже зарегистрирован',
+          ),
+        );
+      } else if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(BadRequestError('Переданы некорректные данные'));
       } else {
         next(err);
