@@ -2,13 +2,9 @@ const {
   Joi,
   celebrate,
 } = require('celebrate');
-const validator = require('validator');
+const urlValidation = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 const BadRequestError = require('../errors/BadRequestError');
 
-const urlValidation = (url) => {
-  if (validator.isUrl(url)) return url;
-  throw new BadRequestError('Некорректный адрес URL');
-};
 
 module.exports.registrationValidation = celebrate({
   body: Joi.object().keys({
@@ -32,9 +28,9 @@ module.exports.saveMovieValidation = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().custom(urlValidation),
-    trailer: Joi.string().required().custom(urlValidation),
-    thumbnail: Joi.string().required().custom(urlValidation),
+    image: Joi.string().required().regex(urlValidation),
+    trailerLink: Joi.string().required().regex(urlValidation),
+    thumbnail: Joi.string().required().regex(urlValidation),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
