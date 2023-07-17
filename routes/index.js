@@ -22,7 +22,7 @@ router.post('/signup', registrationValidation, createUser);
 router.use(auth);
 
 router.use('/users', usersRouter);
-router.use('/movies', moviesRouter);
+router.use('/', moviesRouter);
 router.use('*',(request, response, next) => {
   next(new NotFoundError('Такая страница не существует'));
 });
