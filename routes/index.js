@@ -23,7 +23,7 @@ router.use(auth);
 
 router.use('/users', usersRouter);
 router.use('/movies', moviesRouter);
-router.use((request, response, next) => {
+router.use('*',(request, response, next) => {
   next(new NotFoundError('Такая страница не существует'));
 });
 
