@@ -6,7 +6,7 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: [true, 'поле country должно быть заполнено']
   },
-  direction: {
+  director: {
     type: String,
     required: [true, 'поле direction должно быть заполнено']
   },
