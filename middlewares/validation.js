@@ -4,7 +4,7 @@ const {
 } = require('celebrate');
 
 const urlValidation = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
-const BadRequestError = require('../errors/BadRequestError');
+// const BadRequestError = require('../errors/BadRequestError');
 
 module.exports.registrationValidation = celebrate({
   body: Joi.object().keys({
