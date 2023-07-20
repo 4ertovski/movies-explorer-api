@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-// const validator = require('validator');
-const { EMAIL_REGEX } = require('../utils/config');
+const isEmail = require('validator/lib/isEmail');
+/*const { EMAIL_REGEX } = require('../utils/config');*/
 const bcrypt = require('bcryptjs');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 
@@ -16,17 +16,17 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
   email: {
-    unique: true,
     type: String,
     required: true,
-   /* validate: {
-      validator: (email) => validator.isEmail(email),
-      message: 'Некорректный email',
-    }, */
+    unique: true,
     validate: {
-      validator: (email) => EMAIL_REGEX.test(email),
+      validator: (v) => isEmail(v),
       message: 'Некорректный email',
     },
+   /* validate: {
+      validator: (email) => EMAIL_REGEX.test(email),
+      message: 'Некорректный email',
+    },*/
   },
 });
 
