@@ -21,9 +21,10 @@ router.post('/signin', loginValidation, login);
 router.post('/signup', registrationValidation, createUser);
 router.use(auth);
 
-router.use('/users', usersRouter);
+// изменены роуты
+router.use('/', usersRouter);
 router.use('/', moviesRouter);
-router.use('*',(request, response, next) => {
+router.use('*', (request, response, next) => {
   next(new NotFoundError('Такая страница не существует'));
 });
 
